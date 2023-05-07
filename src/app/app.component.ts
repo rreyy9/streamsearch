@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
+    this.onToken();
   }
 
   onToken(){
