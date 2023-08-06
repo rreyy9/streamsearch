@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   searchValue: string;
   pager: string;
   bearerToken: String;
+  gameId: string;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -39,6 +40,7 @@ export class AppComponent implements OnInit {
   }
 
   onWorldOfWarcraft() {
+    this.gameId = '18122';
     this.pager = '';
 
     const streamOptions = {
@@ -54,10 +56,47 @@ export class AppComponent implements OnInit {
       console.log(this.pager);
     })   
   }
+
+  onJustChatting() {
+    this.gameId = '509658';
+    this.pager = '';
+
+    const streamOptions = {
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ this.bearerToken, 'client-id': '4scexyqd6nhgn4ewulcsegxdt2xgtt' },
+      params: { 'game_id': '509658', 'first': '100', 'after': this.pager }
+    };
+
+    this.httpClient.get<any>('https://api.twitch.tv/helix/streams', streamOptions).subscribe(result => 
+    {
+      this.streams = result.data
+      console.log(this.streams);
+      this.pager = result.pagination.cursor
+      console.log(this.pager);
+    })   
+  }
+
+  onDiabloIV() {
+    this.gameId = '515024';
+    this.pager = '';
+
+    const streamOptions = {
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ this.bearerToken, 'client-id': '4scexyqd6nhgn4ewulcsegxdt2xgtt' },
+      params: { 'game_id': '515024', 'first': '100', 'after': this.pager }
+    };
+
+    this.httpClient.get<any>('https://api.twitch.tv/helix/streams', streamOptions).subscribe(result => 
+    {
+      this.streams = result.data
+      console.log(this.streams);
+      this.pager = result.pagination.cursor
+      console.log(this.pager);
+    })   
+  }
+
   onLoadNextData(){
     const streamOptions = {
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ this.bearerToken, 'client-id': '4scexyqd6nhgn4ewulcsegxdt2xgtt' },
-      params: { 'game_id': '18122', 'first': '100', 'type': 'live', 'after': this.pager }
+      params: { 'game_id': this.gameId, 'first': '100', 'type': 'live', 'after': this.pager }
     };
 
     this.httpClient.get<any>('https://api.twitch.tv/helix/streams', streamOptions).subscribe(result => 

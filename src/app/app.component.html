@@ -4,30 +4,39 @@
 <meta http-equiv='pragma' content='no-cache'>
 </head>
 <body>
-<div class="form-group row"></div>
-<div class="form-group row">
-  <button class="button" (click)="onWorldOfWarcraft()">World of Warcraft</button>
-  <button id="btnNext" class="button" (click)="onLoadNextData()">Load Next Data</button>
-  <label for="search" class="col-sm-2 col-form-label" style="text-align: right;">Search</label>
-  <div class="col-sm-6">
-      <input type="text" [(ngModel)]="searchValue" class="form-control" id="search"/>
-  </div>
-</div>
+  <div class="row">
+    <div class="column">
+      <button class="button" (click)="onWorldOfWarcraft()">World of Warcraft</button>
+      <button class="button" (click)="onJustChatting()">Just Chatting</button>
+      <button class="button" (click)="onDiabloIV()">Diablo IV</button>
+    </div>
+    <div class="column2">
+      <div class="form-group row">
+  
+        <button id="btnNext" class="button" (click)="onLoadNextData()">Load Next Data</button>
+        <label for="search" class="col-sm-2 col-form-label" style="text-align: right;">Search</label>
+        <div class="col-sm-6">
+            <input type="text" [(ngModel)]="searchValue" class="form-control" id="search"/>
+        </div>
+      </div>
+      
+      <table class="table">
+        <thead>
+            <tr>
+              <th scope="col">url</th>
+              <th scope="col">title</th>
+              <th scope="col">viewer_count</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of streams | searchFilter:searchValue">
+              <td scope="col"><a href="https://www.twitch.tv/{{x.user_name}}" target="_blank" rel="noopener noreferrer">{{x.user_name}}</a></td>
+              <td scope="col">{{x.title}}</td>
+              <td scope="col">{{x.viewer_count}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div> 
 
-<table class="table">
-  <thead>
-      <tr>
-        <th scope="col">url</th>
-        <th scope="col">title</th>
-        <th scope="col">viewer_count</th>
-      </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let x of streams | searchFilter:searchValue">
-        <td scope="col"><a href="https://www.twitch.tv/{{x.user_name}}" target="_blank" rel="noopener noreferrer">{{x.user_name}}</a></td>
-        <td scope="col">{{x.title}}</td>
-        <td scope="col">{{x.viewer_count}}</td>
-    </tr>
-  </tbody>
-</table>
 </body>
